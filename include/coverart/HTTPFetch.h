@@ -254,6 +254,7 @@ namespace CoverArtArchive
 		 * @throw CFetchError An error occurred fetching data
 		 * @throw CRequestError The request was invalid
 		 * @throw CResourceNotFoundError The requested resource was not found
+		 * @throw CRedirect A redirect was received and not followed
 		 */
 
 		int Fetch(const std::string& URL, bool FollowRedirects=true);
