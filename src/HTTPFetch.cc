@@ -158,7 +158,9 @@ int CoverArtArchive::CHTTPFetch::Fetch(const std::string& URL, bool FollowRedire
 				Finished=false;
 			}
 			else
-				throw r;
+			{
+				throw;
+			}
 		}
 
 		catch(...)
