@@ -28,6 +28,8 @@
 #include <string>
 #include <vector>
 
+#include "coverart/ReleaseInfo.h"
+
 namespace CoverArtArchive
 {
 	class CCoverArtPrivate;
@@ -59,6 +61,14 @@ namespace CoverArtArchive
 
 		CCoverArt(const std::string& UserAgent);
 		~CCoverArt();
+
+		/**
+		 * @brief Set the proxy server to use
+		 *
+		 * Set the proxy server to use when connecting with the web server
+		 *
+		 * @param ProxyHost Proxy server to use
+		 */
 
 		void SetProxyHost(const std::string& ProxyHost);
 
@@ -92,10 +102,66 @@ namespace CoverArtArchive
 
 		void SetProxyPassword(const std::string& ProxyPassword);
 
-		std::vector<unsigned char> FetchFront(const std::string& ReleaseID) const;
-		std::vector<unsigned char> FetchBack(const std::string& ReleaseID) const;
-		std::vector<unsigned char> FetchImage(const std::string& ReleaseID, const std::string& ID, tImageSize Size=eSize_Full) const;
+		/**
+		 * @brief Request the front image for a release
+		 *
+		 * Request the front image for a release
+		 *
+		 * @param ReleaseID The release ID
+		 *
+		 * @return The downloaded image
+		 *
+		 * @throw CConnectionError An error occurred connecting to the web server
+		 * @throw CTimeoutError A timeout occurred when connecting to the web server
+		 * @throw CAuthenticationError An authentication error occurred
+		 * @throw CFetchError An error occurred fetching data
+		 * @throw CRequestError The request was invalid
+		 * @throw CResourceNotFoundError The requested resource was not found
+		 */
 
+		std::vector<unsigned char> FetchFront(const std::string& ReleaseID) const;
+
+		/**
+		 * @brief Request the back image for a release
+		 *
+		 * Request the back image for a release
+		 *
+		 * @param ReleaseID The release ID
+		 *
+		 * @return The downloaded image
+		 *
+		 * @throw CConnectionError An error occurred connecting to the web server
+		 * @throw CTimeoutError A timeout occurred when connecting to the web server
+		 * @throw CAuthenticationError An authentication error occurred
+		 * @throw CFetchError An error occurred fetching data
+		 * @throw CRequestError The request was invalid
+		 * @throw CResourceNotFoundError The requested resource was not found
+		 */
+
+		std::vector<unsigned char> FetchBack(const std::string& ReleaseID) const;
+
+		/**
+		 * @brief Fetch a specific image for a release
+		 *
+		 *
+		 *
+		 * @param ReleaseID The release ID
+		 * @param ImageID The image ID
+		 * @param ImageSize The image size
+		 *
+		 * @return The downloaded image
+		 *
+		 * @throw CConnectionError An error occurred connecting to the web server
+		 * @throw CTimeoutError A timeout occurred when connecting to the web server
+		 * @throw CAuthenticationError An authentication error occurred
+		 * @throw CFetchError An error occurred fetching data
+		 * @throw CRequestError The request was invalid
+		 * @throw CResourceNotFoundError The requested resource was not found
+		 */
+
+		std::vector<unsigned char> FetchImage(const std::string& ReleaseID, const std::string& ImageID, tImageSize ImageSize=eSize_Full) const;
+
+		CReleaseInfo ReleaseInfo(const std::string& ReleaseID) const;
 	private:
 		CCoverArtPrivate * const m_d;
 

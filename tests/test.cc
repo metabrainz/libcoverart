@@ -3,11 +3,17 @@
 #include "coverart/HTTPFetch.h"
 #include "coverart/CoverArt.h"
 
+#include <jansson.h>
+
 int main(int /*argc*/, const char */*argv*/[])
 {
 	try
 	{
 		CoverArtArchive::CCoverArt Art("test");
+		CoverArtArchive::CReleaseInfo ReleaseInfo=Art.ReleaseInfo("189d7863-a23c-49d9-ae7e-031b413b2805");
+		std::cout << ReleaseInfo << std::endl;
+
+/*
 		std::vector<unsigned char> Image=Art.FetchFront("189d7863-a23c-49d9-ae7e-031b413b2805");
 		std::cout << "Front has size " << Image.size() << std::endl;
 

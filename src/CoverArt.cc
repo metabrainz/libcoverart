@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <iostream>
 #include <sstream>
 
 #include <ne_uri.h>
@@ -156,7 +157,6 @@ std::vector<unsigned char> CoverArtArchive::CCoverArt::FetchImage(const std::str
 	return MakeRequest(URL.str());
 }
 
-
 std::vector<unsigned char> CoverArtArchive::CCoverArt::MakeRequest(const std::string& URL) const
 {
 	CHTTPFetch Fetch(m_d->m_UserAgent);
@@ -168,4 +168,22 @@ std::vector<unsigned char> CoverArtArchive::CCoverArt::MakeRequest(const std::st
 
 	Fetch.Fetch(URL);
 	return Fetch.Data();
+}
+
+CoverArtArchive::CReleaseInfo CoverArtArchive::CCoverArt::ReleaseInfo(const std::string& ReleaseID) const
+{
+	CReleaseInfo ReleaseInfo;
+
+	std::stringstream URL;
+	URL << "http://coverartarchive.org/release/" << ReleaseID;
+
+	std::vector<unsigned char> JSON=MakeRequest(URL.str());
+	std::string strJSON(JSON.begin(),JSON.end());
+
+	if (strJSON.size()!=0)
+	{
+		ReleaseInfo=CReleaseInfo(strJSON);
+	}
+
+	return ReleaseInfo;
 }
