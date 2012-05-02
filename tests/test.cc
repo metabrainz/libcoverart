@@ -3,8 +3,6 @@
 #include "coverart/HTTPFetch.h"
 #include "coverart/CoverArt.h"
 
-#include <jansson.h>
-
 int main(int /*argc*/, const char */*argv*/[])
 {
 	try
@@ -28,13 +26,6 @@ int main(int /*argc*/, const char */*argv*/[])
 
 		Image=Art.FetchImage("189d7863-a23c-49d9-ae7e-031b413b2805","832154846",CoverArtArchive::CCoverArt::eSize_500);
 		std::cout << "Image has size " << Image.size() << std::endl;
-
-/*
-		CoverArtArchive::CHTTPFetch Fetch("test");
-		Fetch.Fetch("http://coverartarchive.org/release/189d7863-a23c-49d9-ae7e-031b413b2805");
-		std::vector<unsigned char> Data=Fetch.Data();
-		std::string strData(Data.begin(),Data.end());
-		std::cout << "Response: '" << strData << "'" << std::endl;
 */
 	}
 
