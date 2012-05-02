@@ -20,6 +20,7 @@ SET(coverart_SOVERSION ${coverart_SOVERSION_MAJOR})
 
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 FIND_PACKAGE(Neon REQUIRED)
+FIND_PACKAGE(Jansson REQUIRED)
 
 SET(LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32/64)")
 SET(EXEC_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX} CACHE PATH "Installation prefix for executables and object code libraries" FORCE)
