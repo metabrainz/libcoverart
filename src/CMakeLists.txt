@@ -1,7 +1,7 @@
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_SOURCE_DIR}/../include ${NEON_INCLUDE_DIR})
 
-SET(_sources HTTPFetch.cc)
+SET(_sources HTTPFetch.cc CoverArt.cc)
 
 ADD_LIBRARY(coverart SHARED ${_sources})
 
