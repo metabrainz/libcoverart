@@ -30,11 +30,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "ne_session.h"
-#include "ne_auth.h"
-#include "ne_string.h"
-#include "ne_request.h"
-#include "ne_uri.h"
+#include <iostream>
+
+#include <ne_session.h>
+#include <ne_auth.h>
+#include <ne_string.h>
+#include <ne_request.h>
+#include <ne_uri.h>
 
 class CoverArtArchive::CHTTPFetchPrivate
 {
@@ -175,6 +177,10 @@ int CoverArtArchive::CHTTPFetch::Fetch(const std::string& URL, bool FollowRedire
 int CoverArtArchive::CHTTPFetch::DoRequest(const std::string& URL)
 {
 	int Ret=0;
+
+#ifdef _COVERART_DEBUG_
+	std::cerr << "Fetching '" << URL << "'" << std::endl;
+#endif
 
 	ne_uri uri;
 	ne_uri_parse(URL.c_str(),&uri);
