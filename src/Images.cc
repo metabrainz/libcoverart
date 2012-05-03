@@ -81,6 +81,8 @@ CoverArtArchive::CImages& CoverArtArchive::CImages::operator =(const CImages& Ot
 
 CoverArtArchive::CImages::~CImages()
 {
+	Cleanup();
+
 	delete m_d;
 }
 
