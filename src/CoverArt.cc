@@ -31,8 +31,6 @@
 #include <iostream>
 #include <sstream>
 
-#include <ne_uri.h>
-
 #include "coverart/CoverArt.h"
 #include "coverart/HTTPFetch.h"
 
@@ -59,37 +57,6 @@ CoverArtArchive::CCoverArt::CCoverArt(const std::string& UserAgent)
 	for (std::string::size_type Pos=0;Pos<m_d->m_UserAgent.length();Pos++)
 		if (m_d->m_UserAgent[Pos]=='-')
 			m_d->m_UserAgent[Pos]='/';
-
-	// Parse http_proxy environmnent variable
-	const char *http_proxy = getenv("http_proxy");
-	if (http_proxy)
-	{
-		ne_uri uri;
-		if (!ne_uri_parse(http_proxy, &uri))
-		{
-			if (uri.host)
-				m_d->m_ProxyHost = uri.host;
-			if (uri.port)
-				m_d->m_ProxyPort = uri.port;
-
-			if (uri.userinfo)
-			{
-				char *pos = strchr(uri.userinfo, ':');
-				if (pos)
-				{
-					*pos = '\0';
-					m_d->m_ProxyUserName = uri.userinfo;
-					m_d->m_ProxyPassword = pos + 1;
-				}
-				else
-				{
-					m_d->m_ProxyUserName = uri.userinfo;
-				}
-			}
-		}
-
-		ne_uri_free(&uri);
-	}
 }
 
 CoverArtArchive::CCoverArt::~CCoverArt()
