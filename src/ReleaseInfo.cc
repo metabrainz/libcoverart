@@ -60,6 +60,8 @@ CoverArtArchive::CReleaseInfo::CReleaseInfo(const std::string& JSON)
 		if (Images && json_is_array(Images))
 			m_d->m_Images=new CImages(Images);
 	}
+
+	json_decref(Root);
 }
 
 CoverArtArchive::CReleaseInfo::CReleaseInfo(const CReleaseInfo& Other)
