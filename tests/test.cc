@@ -11,7 +11,6 @@ int main(int /*argc*/, const char */*argv*/[])
 		CoverArtArchive::CReleaseInfo ReleaseInfo=Art.ReleaseInfo("189d7863-a23c-49d9-ae7e-031b413b2805");
 		std::cout << ReleaseInfo << std::endl;
 
-/*
 		std::vector<unsigned char> Image=Art.FetchFront("189d7863-a23c-49d9-ae7e-031b413b2805");
 		std::cout << "Front has size " << Image.size() << std::endl;
 
@@ -26,7 +25,6 @@ int main(int /*argc*/, const char */*argv*/[])
 
 		Image=Art.FetchImage("189d7863-a23c-49d9-ae7e-031b413b2805","832154846",CoverArtArchive::CCoverArt::eSize_500);
 		std::cout << "Image has size " << Image.size() << std::endl;
-*/
 	}
 
 	catch (CoverArtArchive::CExceptionBase e)
