@@ -43,7 +43,8 @@ namespace CoverArtArchive
 			CImages& operator =(const CImages& Other);
 			virtual ~CImages();
 
-			std::vector<CoverArtArchive::CImage *> Images() const;
+			int NumItems() const;
+			CImage *Item(int Item) const;
 
 		private:
 			CImagesPrivate * const m_d;

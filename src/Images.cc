@@ -95,17 +95,20 @@ void CoverArtArchive::CImages::Cleanup()
 	}
 }
 
-std::vector<CoverArtArchive::CImage *> CoverArtArchive::CImages::Images() const
+int CoverArtArchive::CImages::NumItems() const
 {
-	return m_d->m_Images;
+	return m_d->m_Images.size();
+}
+
+CoverArtArchive::CImage *CoverArtArchive::CImages::Item(int Item) const
+{
+	return m_d->m_Images[Item];
 }
 
 std::ostream& operator << (std::ostream& os, const CoverArtArchive::CImages& Images)
 {
-	std::vector<CoverArtArchive::CImage *> ImageList=Images.Images();
-
-	for (std::vector<CoverArtArchive::CImage *>::const_iterator ThisImage=ImageList.begin();ThisImage!=ImageList.end();++ThisImage)
-		os << **ThisImage << std::endl;
+	for (int count=0;count<Images.NumItems();count++)
+		os << *Images.Item(count) << std::endl;
 
 	return os;
 }
