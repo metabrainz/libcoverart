@@ -55,9 +55,10 @@ namespace CoverArtArchive
 		 *
 		 * Constructor
 		 *
-		 * @param UserAgent User agent string to send
-		 */
-
+     * @param UserAgent User agent to use in any queries and submissions. The format
+     *              is @c "application-version", where application is your application's name
+     *              and version is a version number which may not contain a '-' character.
+		*/
 
 		CCoverArt(const std::string& UserAgent);
 		~CCoverArt();
@@ -143,7 +144,7 @@ namespace CoverArtArchive
 		/**
 		 * @brief Fetch a specific image for a release
 		 *
-		 *
+		 * Request a specific image for a release
 		 *
 		 * @param ReleaseID The release ID
 		 * @param ImageID The image ID
@@ -161,7 +162,25 @@ namespace CoverArtArchive
 
 		std::vector<unsigned char> FetchImage(const std::string& ReleaseID, const std::string& ImageID, tImageSize ImageSize=eSize_Full) const;
 
+		/**
+		 * @brief Return release information for a release
+		 *
+		 * Return release information for a release
+		 *
+		 * @param ReleaseID The release ID
+		 *
+		 * @return Release information
+		 *
+		 * @throw CConnectionError An error occurred connecting to the web server
+		 * @throw CTimeoutError A timeout occurred when connecting to the web server
+		 * @throw CAuthenticationError An authentication error occurred
+		 * @throw CFetchError An error occurred fetching data
+		 * @throw CRequestError The request was invalid
+		 * @throw CResourceNotFoundError The requested resource was not found
+		 */
+
 		CReleaseInfo ReleaseInfo(const std::string& ReleaseID) const;
+
 	private:
 		CCoverArtPrivate * const m_d;
 
