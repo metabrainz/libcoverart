@@ -32,11 +32,12 @@
 
 #include <iostream>
 
+#include "NeonWrappers.h"
+
 #include <ne_session.h>
 #include <ne_auth.h>
 #include <ne_string.h>
 #include <ne_request.h>
-#include <ne_uri.h>
 
 class CoverArtArchive::CHTTPFetchPrivate
 {
@@ -74,31 +75,30 @@ CoverArtArchive::CHTTPFetch::CHTTPFetch(const std::string& UserAgent)
 	const char *http_proxy = getenv("http_proxy");
 	if (http_proxy)
 	{
-		ne_uri uri;
-		if (!ne_uri_parse(http_proxy, &uri))
-		{
-			if (uri.host)
-				m_d->m_ProxyHost = uri.host;
-			if (uri.port)
-				m_d->m_ProxyPort = uri.port;
+		CNEURIWrapper URI(http_proxy);
 
-			if (uri.userinfo)
+		if (URI)
+		{
+			if (URI.Host())
+				m_d->m_ProxyHost = URI.Host();
+			if (URI.Port())
+				m_d->m_ProxyPort = URI.Port();
+
+			if (URI.UserInfo())
 			{
-				char *pos = strchr(uri.userinfo, ':');
+				char *pos = strchr(URI.UserInfo(), ':');
 				if (pos)
 				{
 					*pos = '\0';
-					m_d->m_ProxyUserName = uri.userinfo;
+					m_d->m_ProxyUserName = URI.UserInfo();
 					m_d->m_ProxyPassword = pos + 1;
 				}
 				else
 				{
-					m_d->m_ProxyUserName = uri.userinfo;
+					m_d->m_ProxyUserName = URI.UserInfo();
 				}
 			}
 		}
-
-		ne_uri_free(&uri);
 	}
 }
 
@@ -182,48 +182,44 @@ int CoverArtArchive::CHTTPFetch::DoRequest(const std::string& URL)
 	std::cerr << "Fetching '" << URL << "'" << std::endl;
 #endif
 
-	ne_uri uri;
-	ne_uri_parse(URL.c_str(),&uri);
-	int Port=uri.port;
+	CNEURIWrapper URI(URL);
+
+	int Port=URI.Port();
 	if (0==Port)
-		Port=ne_uri_defaultport(uri.scheme);
+		Port=ne_uri_defaultport(URI.Scheme());
 
 	m_d->m_Data.clear();
 
-	ne_sock_init();
+	CNESockWrapper SockWrapper;
 
-	ne_session *sess=ne_session_create(uri.scheme, uri.host, Port);
-	if (sess)
+	CNESessionWrapper SessionWrapper(URI.Scheme(), URI.Host(), Port);
+	if (SessionWrapper)
 	{
-		ne_set_useragent(sess, m_d->m_UserAgent.c_str());
+		ne_set_useragent(SessionWrapper, m_d->m_UserAgent.c_str());
 
-		ne_set_server_auth(sess, httpAuth, this);
+		ne_set_server_auth(SessionWrapper, httpAuth, this);
 
 		// Use proxy server
 		if (!m_d->m_ProxyHost.empty())
 		{
-			ne_session_proxy(sess, m_d->m_ProxyHost.c_str(), m_d->m_ProxyPort);
-			ne_set_proxy_auth(sess, proxyAuth, this);
+			ne_session_proxy(SessionWrapper, m_d->m_ProxyHost.c_str(), m_d->m_ProxyPort);
+			ne_set_proxy_auth(SessionWrapper, proxyAuth, this);
 		}
 
-		ne_request *req = ne_request_create(sess, "GET", uri.path);
+		CNERequestWrapper RequestWrapper(SessionWrapper, "GET", URI.Path());
 
-		ne_add_response_body_reader(req, ne_accept_2xx, httpResponseReader, &m_d->m_Data);
+		ne_add_response_body_reader(RequestWrapper, ne_accept_2xx, httpResponseReader, &m_d->m_Data);
 
-		m_d->m_Result = ne_request_dispatch(req);
-		m_d->m_Status = ne_get_status(req)->code;
-		const char *Location = ne_get_response_header(req,"Location");
+		m_d->m_Result = ne_request_dispatch(RequestWrapper);
+		m_d->m_Status = ne_get_status(RequestWrapper)->code;
+		const char *Location = ne_get_response_header(RequestWrapper,"Location");
 		std::string strLocation;
 		if (0!=Location)
 			strLocation=Location;
 
 		Ret=m_d->m_Data.size();
 
-		ne_request_destroy(req);
-
-		m_d->m_ErrorMessage = ne_get_error(sess);
-
-		ne_session_destroy(sess);
+		m_d->m_ErrorMessage = ne_get_error(SessionWrapper);
 
 		switch (m_d->m_Result)
 		{
@@ -282,8 +278,6 @@ int CoverArtArchive::CHTTPFetch::DoRequest(const std::string& URL)
 				break;
 		}
 	}
-
-	ne_sock_exit();
 
 	return Ret;
 }
