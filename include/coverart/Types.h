@@ -42,7 +42,8 @@ namespace CoverArtArchive
 			CTypes& operator =(const CTypes& Other);
 			virtual ~CTypes();
 
-			std::vector<std::string> Types() const;
+			int NumItems() const;
+			std::string Item(int Item) const;
 
 		private:
 			CTypesPrivate * const m_d;

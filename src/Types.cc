@@ -82,18 +82,21 @@ CoverArtArchive::CTypes::~CTypes()
 	delete m_d;
 }
 
-std::vector<std::string> CoverArtArchive::CTypes::Types() const
+int CoverArtArchive::CTypes::NumItems() const
 {
-	return m_d->m_Types;
+	return m_d->m_Types.size();
+}
+
+std::string CoverArtArchive::CTypes::Item(int Item) const
+{
+	return m_d->m_Types[Item];
 }
 
 std::ostream& operator << (std::ostream& os, const CoverArtArchive::CTypes& Types)
 {
-	std::vector<std::string> TypesList=Types.Types();
-
 	os << "          Types: " << std::endl;
-	for(std::vector<std::string>::const_iterator ThisType=TypesList.begin();ThisType!=TypesList.end();++ThisType)
-		os << "            " << (*ThisType) << std::endl;
+	for (int count=0;count<Types.NumItems();count++)
+		os << "            " << Types.Item(count) << std::endl;
 
 	return os;
 }
