@@ -599,7 +599,6 @@ void ProcessList(const XMLNode& Node, std::ofstream& Source, std::ofstream& Incl
 void ProcessDeclare(const XMLNode& Node, std::ofstream& /*Source*/, std::ofstream& Include)
 {
 	std::vector<std::string> Classes;
-	Classes.push_back("Entity");
 
 	for (int count=0;count<Node.nChildNode();count++)
 	{
@@ -623,7 +622,7 @@ void ProcessDeclare(const XMLNode& Node, std::ofstream& /*Source*/, std::ofstrea
 			}
 			else
 			{
-				std::cerr << "Entity, Class or List specified with no name or type" << std::endl;
+				std::cerr << "Class or List specified with no name" << std::endl;
 				exit(1);
 			}
 		}
