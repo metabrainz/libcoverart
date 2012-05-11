@@ -2,8 +2,18 @@ SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_SOURCE_DIR}/../include ${NEON_INCLUDE_DIR} ${JANSSON_INCLUDE_DIR})
 
 SET(_sources HTTPFetch.cc CoverArt.cc ReleaseInfo.cc ImageList.cc Image.cc
-	Thumbnails.cc TypeList.cc Type.cc)
+	Thumbnails.cc TypeList.cc caa_c.cc Type.cc)
 
+ADD_EXECUTABLE(make-c-interface make-c-interface.cc xmlParser.cpp)
+
+ADD_CUSTOM_COMMAND(
+	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/caa_c.cc ${CMAKE_CURRENT_BINARY_DIR}/caa_c.h ${CMAKE_CURRENT_BINARY_DIR}/../include/coverart/caa_c.h
+	COMMAND make-c-interface ${CMAKE_CURRENT_SOURCE_DIR} cinterface.xml ${CMAKE_CURRENT_BINARY_DIR} caa_c.cc caa_c.h
+	COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_BINARY_DIR}/caa_c.h ${CMAKE_CURRENT_BINARY_DIR}/../include/coverart
+	DEPENDS make-c-interface cinterface.xml *.inc
+)
+
+ADD_CUSTOM_TARGET(src_gen DEPENDS caa_c.h)
 
 ADD_LIBRARY(coverart SHARED ${_sources})
 
@@ -37,6 +47,7 @@ IF(CMAKE_COMPILER_IS_GNUCXX)
 		set_source_files_properties(Thumbnails.cc PROPERTIES COMPILE_FLAGS "-Wno-long-long")
 		set_source_files_properties(TypeList.cc PROPERTIES COMPILE_FLAGS "-Wno-long-long")
 		set_source_files_properties(CoverArt.cc PROPERTIES COMPILE_FLAGS "-Wno-long-long")
+		set_source_files_properties(caa_c.cc PROPERTIES COMPILE_FLAGS "-Wno-long-long")
 ENDIF(CMAKE_COMPILER_IS_GNUCXX)
 
 INSTALL(TARGETS coverart DESTINATION ${LIB_INSTALL_DIR})

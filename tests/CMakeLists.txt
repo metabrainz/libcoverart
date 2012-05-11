@@ -1,7 +1,7 @@
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../include)
 LINK_LIBRARIES(coverart ${NEON_LIBRARIES})
 ADD_EXECUTABLE(test test.cc)
-#ADD_EXECUTABLE(ctest ctest.c)
+ADD_EXECUTABLE(ctest ctest.c)
 
 IF(CMAKE_COMPILER_IS_GNUCXX)
 		SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -Wextra -pedantic-errors")
