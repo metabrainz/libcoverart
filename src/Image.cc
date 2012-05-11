@@ -2,7 +2,7 @@
 
    libcoverart - Client library to access MusicBrainz
 
-   Copyright (C) 2011 Andrew Hawkins
+   Copyright (C) 2012 Andrew Hawkins
 
    This file is part of libcoverart.
 
