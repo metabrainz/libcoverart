@@ -22,35 +22,37 @@
 
 ----------------------------------------------------------------------------*/
 
-#ifndef _COVERARTARCHIVE_RELEASE_INFO_
-#define _COVERARTARCHIVE_RELEASE_INFO_
+#ifndef _COVERARTARCHIVE_IMAGELIST_
+#define _COVERARTARCHIVE_IMAGELIST_
 
 #include <iostream>
+#include <vector>
+
+#include <jansson.h>
 
 namespace CoverArtArchive
 {
-	class CReleaseInfoPrivate;
-	class CImageList;
+	class CImageListPrivate;
+	class CImage;
 
-	class CReleaseInfo
+	class CImageList
 	{
 		public:
-			CReleaseInfo(const std::string& JSON="");
-			CReleaseInfo(const CReleaseInfo& Other);
-			CReleaseInfo& operator =(const CReleaseInfo& Other);
-			virtual ~CReleaseInfo();
+			CImageList(json_t *Root=0);
+			CImageList(const CImageList& Other);
+			CImageList& operator =(const CImageList& Other);
+			virtual ~CImageList();
 
-			std::string Release() const;
-			CoverArtArchive::CImageList *ImageList() const;
+			int NumItems() const;
+			CImage *Item(int Item) const;
 
 		private:
-			CReleaseInfoPrivate * const m_d;
+			CImageListPrivate * const m_d;
 
 			void Cleanup();
 	};
 }
 
-std::ostream& operator << (std::ostream& os, const CoverArtArchive::CReleaseInfo& ReleaseInfo);
+std::ostream& operator << (std::ostream& os, const CoverArtArchive::CImageList& Images);
 
 #endif
-

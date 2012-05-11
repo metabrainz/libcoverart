@@ -38,7 +38,9 @@ class CoverArtArchive::CCoverArtPrivate
 {
 	public:
 		CCoverArtPrivate()
-		:	m_ProxyPort(0)
+		:	m_ProxyPort(0),
+			m_LastResult(CCoverArt::eCoverArt_Success),
+			m_LastHTTPCode(200)
 		{
 		}
 
@@ -47,6 +49,9 @@ class CoverArtArchive::CCoverArtPrivate
 		int m_ProxyPort;
 		std::string m_ProxyUserName;
 		std::string m_ProxyPassword;
+		CCoverArt::tCoverArtResult m_LastResult;
+		int m_LastHTTPCode;
+		std::string m_LastErrorMessage;
 };
 
 CoverArtArchive::CCoverArt::CCoverArt(const std::string& UserAgent)
@@ -128,12 +133,70 @@ std::vector<unsigned char> CoverArtArchive::CCoverArt::MakeRequest(const std::st
 {
 	CHTTPFetch Fetch(m_d->m_UserAgent);
 
-	Fetch.SetProxyHost(m_d->m_ProxyHost);
-	Fetch.SetProxyPort(m_d->m_ProxyPort);
-	Fetch.SetProxyUserName(m_d->m_ProxyUserName);
-	Fetch.SetProxyPassword(m_d->m_ProxyPassword);
+	try
+	{
+		Fetch.SetProxyHost(m_d->m_ProxyHost);
+		Fetch.SetProxyPort(m_d->m_ProxyPort);
+		Fetch.SetProxyUserName(m_d->m_ProxyUserName);
+		Fetch.SetProxyPassword(m_d->m_ProxyPassword);
 
-	Fetch.Fetch(URL);
+		Fetch.Fetch(URL);
+	}
+
+	catch (CConnectionError& Error)
+	{
+		m_d->m_LastResult=CCoverArt::eCoverArt_ConnectionError;
+		m_d->m_LastHTTPCode=Fetch.Status();
+		m_d->m_LastErrorMessage=Fetch.ErrorMessage();
+
+		throw;
+	}
+
+	catch (CTimeoutError& Error)
+	{
+		m_d->m_LastResult=CCoverArt::eCoverArt_Timeout;
+		m_d->m_LastHTTPCode=Fetch.Status();
+		m_d->m_LastErrorMessage=Fetch.ErrorMessage();
+
+		throw;
+	}
+
+	catch (CAuthenticationError& Error)
+	{
+		m_d->m_LastResult=CCoverArt::eCoverArt_AuthenticationError;
+		m_d->m_LastHTTPCode=Fetch.Status();
+		m_d->m_LastErrorMessage=Fetch.ErrorMessage();
+
+		throw;
+	}
+
+	catch (CFetchError& Error)
+	{
+		m_d->m_LastResult=CCoverArt::eCoverArt_FetchError;
+		m_d->m_LastHTTPCode=Fetch.Status();
+		m_d->m_LastErrorMessage=Fetch.ErrorMessage();
+
+		throw;
+	}
+
+	catch (CRequestError& Error)
+	{
+		m_d->m_LastResult=CCoverArt::eCoverArt_RequestError;
+		m_d->m_LastHTTPCode=Fetch.Status();
+		m_d->m_LastErrorMessage=Fetch.ErrorMessage();
+
+		throw;
+	}
+
+	catch (CResourceNotFoundError& Error)
+	{
+		m_d->m_LastResult=CCoverArt::eCoverArt_ResourceNotFound;
+		m_d->m_LastHTTPCode=Fetch.Status();
+		m_d->m_LastErrorMessage=Fetch.ErrorMessage();
+
+		throw;
+	}
+
 	return Fetch.Data();
 }
 
@@ -153,4 +216,24 @@ CoverArtArchive::CReleaseInfo CoverArtArchive::CCoverArt::ReleaseInfo(const std:
 	}
 
 	return ReleaseInfo;
+}
+
+CoverArtArchive::CCoverArt::tCoverArtResult CoverArtArchive::CCoverArt::LastResult() const
+{
+	return m_d->m_LastResult;
+}
+
+int CoverArtArchive::CCoverArt::LastHTTPCode() const
+{
+	return m_d->m_LastHTTPCode;
+}
+
+std::string CoverArtArchive::CCoverArt::LastErrorMessage() const
+{
+	return m_d->m_LastErrorMessage;
+}
+
+std::string CoverArtArchive::CCoverArt::Version() const
+{
+	return PACKAGE "-v" VERSION;
 }

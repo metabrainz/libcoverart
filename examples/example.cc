@@ -28,11 +28,12 @@
 
 #include "coverart/CoverArt.h"
 #include "coverart/ReleaseInfo.h"
-#include "coverart/Images.h"
+#include "coverart/ImageList.h"
 #include "coverart/Image.h"
 #include "coverart/Thumbnails.h"
 #include "coverart/HTTPFetch.h"
-#include "coverart/Types.h"
+#include "coverart/TypeList.h"
+#include "coverart/Type.h"
 
 int main(int argc, const char *argv[])
 {
@@ -85,14 +86,17 @@ int main(int argc, const char *argv[])
 		}
 
 		CoverArtArchive::CReleaseInfo ReleaseInfo=CoverArt.ReleaseInfo(ReleaseID);
-		CoverArtArchive::CImages *Images=ReleaseInfo.Images();
-		if (Images)
-		{
-			std::cout << "Found " << Images->NumItems() << " images";
+		std::cout << ReleaseInfo << std::endl;
+		return 0;
 
-			for (int count=0;count<Images->NumItems();count++)
+		CoverArtArchive::CImageList *ImageList=ReleaseInfo.ImageList();
+		if (ImageList)
+		{
+			std::cout << "Found " << ImageList->NumItems() << " images";
+
+			for (int count=0;count<ImageList->NumItems();count++)
 			{
-				CoverArtArchive::CImage *Image=Images->Item(count);
+				CoverArtArchive::CImage *Image=ImageList->Item(count);
 				if (Image)
 				{
 					std::cout << std::endl;
@@ -104,11 +108,15 @@ int main(int argc, const char *argv[])
 					std::cout << "ID: " << Image->ID() << std::endl;
 					std::cout << "Image: " << Image->Image() << std::endl;
 
-					CoverArtArchive::CTypes *Types=Image->Types();
-					if (Types)
+					CoverArtArchive::CTypeList *TypeList=Image->TypeList();
+					if (TypeList)
 					{
-						for (int count=0; count<Types->NumItems();count++)
-							std::cout << "Type: " << Types->Item(count) << std::endl;
+						for (int count=0; count<TypeList->NumItems();count++)
+						{
+							CoverArtArchive::CType *Type=TypeList->Item(count);
+							if (Type)
+								std::cout << "Type: " << Type->Type() << std::endl;
+						}
 					}
 
 					try

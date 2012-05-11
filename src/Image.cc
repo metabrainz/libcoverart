@@ -32,7 +32,7 @@
 
 #include "coverart/Image.h"
 #include "coverart/Thumbnails.h"
-#include "coverart/Types.h"
+#include "coverart/TypeList.h"
 
 class CoverArtArchive::CImagePrivate
 {
@@ -43,7 +43,7 @@ class CoverArtArchive::CImagePrivate
 			m_Edit(0),
 			m_Front(false),
 			m_Thumbnails(0),
-			m_Types(0)
+			m_TypeList(0)
 		{
 		};
 
@@ -55,7 +55,7 @@ class CoverArtArchive::CImagePrivate
 		std::string m_ID;
 		std::string m_Image;
 		CThumbnails *m_Thumbnails;
-		CTypes *m_Types;
+		CTypeList *m_TypeList;
 };
 
 CoverArtArchive::CImage::CImage(json_t *Root)
@@ -109,7 +109,7 @@ CoverArtArchive::CImage::CImage(json_t *Root)
 
 		json_t *Types=json_object_get(Root,"types");
 		if (json_is_array(Types))
-			m_d->m_Types=new CTypes(Types);
+			m_d->m_TypeList=new CTypeList(Types);
 	}
 }
 
@@ -136,8 +136,8 @@ CoverArtArchive::CImage& CoverArtArchive::CImage::operator =(const CImage& Other
 		if (Other.m_d->m_Thumbnails)
 			m_d->m_Thumbnails=new CThumbnails(*Other.m_d->m_Thumbnails);
 
-		if (Other.m_d->m_Types)
-			m_d->m_Types=new CTypes(*Other.m_d->m_Types);
+		if (Other.m_d->m_TypeList)
+			m_d->m_TypeList=new CTypeList(*Other.m_d->m_TypeList);
 	}
 
 	return *this;
@@ -155,8 +155,8 @@ void CoverArtArchive::CImage::Cleanup()
 	delete m_d->m_Thumbnails;
 	m_d->m_Thumbnails=0;
 
-	delete m_d->m_Types;
-	m_d->m_Types=0;
+	delete m_d->m_TypeList;
+	m_d->m_TypeList=0;
 }
 
 bool CoverArtArchive::CImage::Approved() const
@@ -199,9 +199,9 @@ CoverArtArchive::CThumbnails *CoverArtArchive::CImage::Thumbnails() const
 	return m_d->m_Thumbnails;
 }
 
-CoverArtArchive::CTypes *CoverArtArchive::CImage::Types() const
+CoverArtArchive::CTypeList *CoverArtArchive::CImage::TypeList() const
 {
-	return m_d->m_Types;
+	return m_d->m_TypeList;
 }
 
 std::ostream& operator << (std::ostream& os, const CoverArtArchive::CImage& Image)
@@ -219,8 +219,8 @@ std::ostream& operator << (std::ostream& os, const CoverArtArchive::CImage& Imag
 	if (Image.Thumbnails())
 		os << *Image.Thumbnails() << std::endl;
 
-	if (Image.Types())
-		os << *Image.Types() << std::endl;
+	if (Image.TypeList())
+		os << *Image.TypeList() << std::endl;
 
 	return os;
 }

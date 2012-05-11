@@ -22,8 +22,8 @@
 
 ----------------------------------------------------------------------------*/
 
-#ifndef _COVERARTARCHIVE_IMAGES_
-#define _COVERARTARCHIVE_IMAGES_
+#ifndef _COVERARTARCHIVE_TYPELIST_
+#define _COVERARTARCHIVE_TYPELIST_
 
 #include <iostream>
 #include <vector>
@@ -32,27 +32,27 @@
 
 namespace CoverArtArchive
 {
-	class CImagesPrivate;
-	class CImage;
+	class CTypeListPrivate;
+	class CType;
 
-	class CImages
+	class CTypeList
 	{
 		public:
-			CImages(json_t *Root=0);
-			CImages(const CImages& Other);
-			CImages& operator =(const CImages& Other);
-			virtual ~CImages();
+			CTypeList(json_t *Root=0);
+			CTypeList(const CTypeList& Other);
+			CTypeList& operator =(const CTypeList& Other);
+			virtual ~CTypeList();
 
 			int NumItems() const;
-			CImage *Item(int Item) const;
+			CType *Item(int Item) const;
 
 		private:
-			CImagesPrivate * const m_d;
+			CTypeListPrivate * const m_d;
 
 			void Cleanup();
 	};
 }
 
-std::ostream& operator << (std::ostream& os, const CoverArtArchive::CImages& Images);
+std::ostream& operator << (std::ostream& os, const CoverArtArchive::CTypeList& TypeList);
 
 #endif

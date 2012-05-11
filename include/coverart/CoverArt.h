@@ -43,12 +43,33 @@ namespace CoverArtArchive
 	class CCoverArt
 	{
 	public:
-		typedef enum
+		/**
+		 * @brief Enumerated type for image size
+		 *
+		 * Enumerated type for image size
+		 */
+		enum tImageSize
 		{
-			eSize_Full,
-			eSize_250,
-			eSize_500
-		} tImageSize;
+			eSize_Full=0,
+			eSize_250=250,
+			eSize_500=500
+		};
+
+		/**
+		 * @brief Enumerated type for query status
+		 *
+		 * Enumerated type for query status
+		 */
+		enum tCoverArtResult
+		{
+			eCoverArt_Success=0,
+			eCoverArt_ConnectionError,
+			eCoverArt_Timeout,
+			eCoverArt_AuthenticationError,
+			eCoverArt_FetchError,
+			eCoverArt_RequestError,
+			eCoverArt_ResourceNotFound
+		};
 
 		/**
 		 * @brief Constructor
@@ -180,6 +201,43 @@ namespace CoverArtArchive
 		 */
 
 		CReleaseInfo ReleaseInfo(const std::string& ReleaseID) const;
+
+		/**
+		 * @brief Return result of the last query
+		 *
+		 * Return the result of the last query
+		 *
+		 * @return Result of last query
+		 */
+
+		tCoverArtResult LastResult() const;
+
+		/**
+		 * @brief Return HTTP code of the last query
+		 *
+		 * Return the HTTP code of the last query
+		 *
+		 * @return HTTP code of last query
+		 */
+		int LastHTTPCode() const;
+
+		/**
+		 * @brief Return error message from the last query
+		 *
+		 * Return the error message from the last query
+		 *
+		 * @return Error message from last query
+		 */
+		std::string LastErrorMessage() const;
+
+		/**
+		 * @brief Return the library version
+		 *
+		 * Return the library version
+		 *
+		 * @return Library version
+		 */
+		std::string Version() const;
 
 	private:
 		CCoverArtPrivate * const m_d;

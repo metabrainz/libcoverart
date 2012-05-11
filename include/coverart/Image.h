@@ -33,7 +33,7 @@ namespace CoverArtArchive
 {
 	class CImagePrivate;
 	class CThumbnails;
-	class CTypes;
+	class CTypeList;
 
 	class CImage
 	{
@@ -51,7 +51,7 @@ namespace CoverArtArchive
 			std::string ID() const;
 			std::string Image() const;
 			CoverArtArchive::CThumbnails *Thumbnails() const;
-			CoverArtArchive::CTypes *Types() const;
+			CoverArtArchive::CTypeList *TypeList() const;
 
 		private:
 			CImagePrivate * const m_d;

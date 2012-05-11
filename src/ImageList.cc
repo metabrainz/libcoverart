@@ -29,21 +29,21 @@
 
 #include <jansson.h>
 
-#include "coverart/Images.h"
+#include "coverart/ImageList.h"
 #include "coverart/Image.h"
 
-class CoverArtArchive::CImagesPrivate
+class CoverArtArchive::CImageListPrivate
 {
 	public:
-		CImagesPrivate()
+		CImageListPrivate()
 		{
 		};
 
 		std::vector<CoverArtArchive::CImage *> m_Images;
 };
 
-CoverArtArchive::CImages::CImages(json_t *Root)
-:	m_d(new CImagesPrivate)
+CoverArtArchive::CImageList::CImageList(json_t *Root)
+:	m_d(new CImageListPrivate)
 {
 	if (Root && json_is_array(Root))
 	{
@@ -55,13 +55,13 @@ CoverArtArchive::CImages::CImages(json_t *Root)
 	}
 }
 
-CoverArtArchive::CImages::CImages(const CImages& Other)
-:	m_d(new CImagesPrivate)
+CoverArtArchive::CImageList::CImageList(const CImageList& Other)
+:	m_d(new CImageListPrivate)
 {
 	*this=Other;
 }
 
-CoverArtArchive::CImages& CoverArtArchive::CImages::operator =(const CImages& Other)
+CoverArtArchive::CImageList& CoverArtArchive::CImageList::operator =(const CImageList& Other)
 {
 	if (this!=&Other)
 	{
@@ -79,14 +79,14 @@ CoverArtArchive::CImages& CoverArtArchive::CImages::operator =(const CImages& Ot
 	return *this;
 }
 
-CoverArtArchive::CImages::~CImages()
+CoverArtArchive::CImageList::~CImageList()
 {
 	Cleanup();
 
 	delete m_d;
 }
 
-void CoverArtArchive::CImages::Cleanup()
+void CoverArtArchive::CImageList::Cleanup()
 {
 	while (!m_d->m_Images.empty())
 	{
@@ -95,17 +95,17 @@ void CoverArtArchive::CImages::Cleanup()
 	}
 }
 
-int CoverArtArchive::CImages::NumItems() const
+int CoverArtArchive::CImageList::NumItems() const
 {
 	return m_d->m_Images.size();
 }
 
-CoverArtArchive::CImage *CoverArtArchive::CImages::Item(int Item) const
+CoverArtArchive::CImage *CoverArtArchive::CImageList::Item(int Item) const
 {
 	return m_d->m_Images[Item];
 }
 
-std::ostream& operator << (std::ostream& os, const CoverArtArchive::CImages& Images)
+std::ostream& operator << (std::ostream& os, const CoverArtArchive::CImageList& Images)
 {
 	for (int count=0;count<Images.NumItems();count++)
 		os << *Images.Item(count) << std::endl;

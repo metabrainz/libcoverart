@@ -31,18 +31,18 @@
 #include <jansson.h>
 
 #include "coverart/ReleaseInfo.h"
-#include "coverart/Images.h"
+#include "coverart/ImageList.h"
 
 class CoverArtArchive::CReleaseInfoPrivate
 {
 	public:
 		CReleaseInfoPrivate():
-			m_Images(0)
+			m_ImageList(0)
 		{
 		};
 
 		std::string m_Release;
-		CoverArtArchive::CImages *m_Images;
+		CoverArtArchive::CImageList *m_ImageList;
 };
 
 CoverArtArchive::CReleaseInfo::CReleaseInfo(const std::string& JSON)
@@ -58,7 +58,7 @@ CoverArtArchive::CReleaseInfo::CReleaseInfo(const std::string& JSON)
 
 		json_t *Images=json_object_get(Root,"images");
 		if (Images && json_is_array(Images))
-			m_d->m_Images=new CImages(Images);
+			m_d->m_ImageList=new CImageList(Images);
 	}
 
 	json_decref(Root);
@@ -77,7 +77,7 @@ CoverArtArchive::CReleaseInfo& CoverArtArchive::CReleaseInfo::operator =(const C
 		Cleanup();
 
 		m_d->m_Release=Other.m_d->m_Release;
-		m_d->m_Images=new CImages(*Other.m_d->m_Images);
+		m_d->m_ImageList=new CImageList(*Other.m_d->m_ImageList);
 	}
 
 	return *this;
@@ -92,8 +92,8 @@ CoverArtArchive::CReleaseInfo::~CReleaseInfo()
 
 void CoverArtArchive::CReleaseInfo::Cleanup()
 {
-	delete m_d->m_Images;
-	m_d->m_Images=0;
+	delete m_d->m_ImageList;
+	m_d->m_ImageList=0;
 }
 
 std::string CoverArtArchive::CReleaseInfo::Release() const
@@ -101,17 +101,17 @@ std::string CoverArtArchive::CReleaseInfo::Release() const
 	return m_d->m_Release;
 }
 
-CoverArtArchive::CImages *CoverArtArchive::CReleaseInfo::Images() const
+CoverArtArchive::CImageList *CoverArtArchive::CReleaseInfo::ImageList() const
 {
-	return m_d->m_Images;
+	return m_d->m_ImageList;
 }
 
 std::ostream& operator << (std::ostream& os, const CoverArtArchive::CReleaseInfo& ReleaseInfo)
 {
 	os << "Release: " << ReleaseInfo.Release() << std::endl;
 
-	if (ReleaseInfo.Images())
-		os << *ReleaseInfo.Images() << std::endl;
+	if (ReleaseInfo.ImageList())
+		os << *ReleaseInfo.ImageList() << std::endl;
 
 	return os;
 }

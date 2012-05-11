@@ -30,21 +30,21 @@
 
 #include <jansson.h>
 
-#include "coverart/Types.h"
-#include "coverart/Image.h"
+#include "coverart/TypeList.h"
+#include "coverart/Type.h"
 
-class CoverArtArchive::CTypesPrivate
+class CoverArtArchive::CTypeListPrivate
 {
 	public:
-		CTypesPrivate()
+		CTypeListPrivate()
 		{
 		};
 
-		std::vector<std::string> m_Types;
+		std::vector<CType *> m_Types;
 };
 
-CoverArtArchive::CTypes::CTypes(json_t *Root)
-:	m_d(new CTypesPrivate)
+CoverArtArchive::CTypeList::CTypeList(json_t *Root)
+:	m_d(new CTypeListPrivate)
 {
 	if (Root && json_is_array(Root))
 	{
@@ -55,48 +55,67 @@ CoverArtArchive::CTypes::CTypes(json_t *Root)
 			{
 				const char *str=json_string_value(Type);
 				if (str)
-					m_d->m_Types.push_back(str);
+					m_d->m_Types.push_back(new CType(str));
 			}
 		}
 	}
 }
 
-CoverArtArchive::CTypes::CTypes(const CTypes& Other)
-:	m_d(new CTypesPrivate)
+CoverArtArchive::CTypeList::CTypeList(const CTypeList& Other)
+:	m_d(new CTypeListPrivate)
 {
 	*this=Other;
 }
 
-CoverArtArchive::CTypes& CoverArtArchive::CTypes::operator =(const CTypes& Other)
+CoverArtArchive::CTypeList& CoverArtArchive::CTypeList::operator =(const CTypeList& Other)
 {
 	if (this!=&Other)
 	{
-		m_d->m_Types=Other.m_d->m_Types;
+		Cleanup();
+
+		std::vector<CType *>::const_iterator ThisType=Other.m_d->m_Types.begin();
+		while (ThisType!=Other.m_d->m_Types.end())
+		{
+			CType *Type=(*ThisType);
+			m_d->m_Types.push_back(new CType(*Type));
+			++ThisType;
+		}
 	}
 
 	return *this;
 }
 
-CoverArtArchive::CTypes::~CTypes()
+CoverArtArchive::CTypeList::~CTypeList()
 {
+	Cleanup();
+
 	delete m_d;
 }
 
-int CoverArtArchive::CTypes::NumItems() const
+void CoverArtArchive::CTypeList::Cleanup()
+{
+	while (!m_d->m_Types.empty())
+	{
+		delete m_d->m_Types.back();
+		m_d->m_Types.pop_back();
+	}
+}
+
+int CoverArtArchive::CTypeList::NumItems() const
 {
 	return m_d->m_Types.size();
 }
 
-std::string CoverArtArchive::CTypes::Item(int Item) const
+CoverArtArchive::CType *CoverArtArchive::CTypeList::Item(int Item) const
 {
 	return m_d->m_Types[Item];
 }
 
-std::ostream& operator << (std::ostream& os, const CoverArtArchive::CTypes& Types)
+std::ostream& operator << (std::ostream& os, const CoverArtArchive::CTypeList& TypeList)
 {
-	os << "          Types: " << std::endl;
-	for (int count=0;count<Types.NumItems();count++)
-		os << "            " << Types.Item(count) << std::endl;
+	os << "          TypeList: " << std::endl;
+	for (int count=0;count<TypeList.NumItems();count++)
+		os << "            " << *TypeList.Item(count) << std::endl;
 
 	return os;
 }

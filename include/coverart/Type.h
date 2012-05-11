@@ -22,34 +22,30 @@
 
 ----------------------------------------------------------------------------*/
 
-#ifndef _COVERARTARCHIVE_TYPES_
-#define _COVERARTARCHIVE_TYPES_
+#ifndef _COVERARTARCHIVE_TYPE_
+#define _COVERARTARCHIVE_TYPE_
 
 #include <iostream>
-#include <vector>
-
-#include <jansson.h>
 
 namespace CoverArtArchive
 {
-	class CTypesPrivate;
+	class CTypePrivate;
 
-	class CTypes
+	class CType
 	{
 		public:
-			CTypes(json_t *Root=0);
-			CTypes(const CTypes& Other);
-			CTypes& operator =(const CTypes& Other);
-			virtual ~CTypes();
+			CType(const std::string& Type);
+			CType(const CType& Other);
+			CType& operator =(const CType& Other);
+			virtual ~CType();
 
-			int NumItems() const;
-			std::string Item(int Item) const;
+			std::string Type() const;
 
 		private:
-			CTypesPrivate * const m_d;
+			CTypePrivate * const m_d;
 	};
 }
 
-std::ostream& operator << (std::ostream& os, const CoverArtArchive::CTypes& Types);
+std::ostream& operator << (std::ostream& os, const CoverArtArchive::CType& Type);
 
 #endif
