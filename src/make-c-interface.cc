@@ -35,7 +35,6 @@
 
 void ProcessBoilerplate(const XMLNode& Node, std::ofstream& Source, std::ofstream& Include);
 void ProcessHeader(const XMLNode& Node, std::ofstream& Source, std::ofstream& Include);
-void ProcessEntity(const XMLNode& Node, std::ofstream& Source, std::ofstream& Include);
 void ProcessClass(const XMLNode& Node, std::ofstream& Source, std::ofstream& Include);
 void ProcessList(const XMLNode& Node, std::ofstream& Source, std::ofstream& Include);
 void ProcessDeclare(const XMLNode& Node, std::ofstream& Source, std::ofstream& Include);
@@ -85,8 +84,6 @@ int main(int argc, const char *argv[])
 					ProcessHeader(Node,Source,Include);
 				else if ("declare"==Name)
 					ProcessDeclare(TopNode,Source,Include);
-				else if ("entity"==Name)
-					ProcessEntity(Node,Source,Include);
 				else if ("class"==Name)
 					ProcessClass(Node,Source,Include);
 				else if ("list"==Name)
@@ -178,85 +175,6 @@ void ProcessBoilerplate(const XMLNode& Node, std::ofstream& Source, std::ofstrea
 	}
 
 	*File << std::endl;
-}
-
-void ProcessEntity(const XMLNode& /*Node*/, std::ofstream& Source, std::ofstream& Include)
-{
-	Include << "/**" << std::endl;
-	Include << " * Returns the number of extension attributes for the entity" << std::endl;
-	Include << " *" << std::endl;
-	Include << " * @param Entity #CaaEntity object" << std::endl;
-	Include << " *" << std::endl;
-	Include << " * @return The number of characters in the string to copy (not including terminating NULL)" << std::endl;
-	Include << " */" << std::endl;
-	Include << "  int caa_entity_ext_attributes_size(CaaEntity Entity);" << std::endl;
-	Include << std::endl;
-
-	Include << "/**" << std::endl;
-	Include << " * Returns the name of the requested extension attribute" << std::endl;
-	Include << " *" << std::endl;
-	Include << " * @param Entity #CaaEntity object" << std::endl;
-	Include << " * @param Item Item to return" << std::endl;
-	Include << " * @param str Returned string" << std::endl;
-	Include << " * @param len Number of characters available in return string" << std::endl;
-	Include << " *" << std::endl;
-	Include << " * @return The number of characters in the string to copy (not including terminating NULL)" << std::endl;
-	Include << " */" << std::endl;
-	Include << "  int caa_entity_ext_attribute_name(CaaEntity Entity, int Item, char *str, int len);" << std::endl;
-	Include << std::endl;
-
-	Include << "/**" << std::endl;
-	Include << " * Returns the value of the requested extension attribute" << std::endl;
-	Include << " *" << std::endl;
-	Include << " * @param Entity #CaaEntity object" << std::endl;
-	Include << " * @param Item Item to return" << std::endl;
-	Include << " * @param str Returned string" << std::endl;
-	Include << " * @param len Number of characters available in return string" << std::endl;
-	Include << " *" << std::endl;
-	Include << " * @return The number of characters in the string to copy (not including terminating NULL)" << std::endl;
-	Include << " */" << std::endl;
-	Include << "  int caa_entity_ext_attribute_value(CaaEntity Entity, int Item, char *str, int len);" << std::endl;
-	Include << std::endl;
-
-	Include << "/**" << std::endl;
-	Include << " * Returns the number of extension elements for the entity" << std::endl;
-	Include << " *" << std::endl;
-	Include << " * @param Entity #CaaEntity object" << std::endl;
-	Include << " *" << std::endl;
-	Include << " * @return The number of characters in the string to copy (not including terminating NULL)" << std::endl;
-	Include << " */" << std::endl;
-	Include << "  int caa_entity_ext_elements_size(CaaEntity Entity);" << std::endl;
-	Include << std::endl;
-
-	Include << "/**" << std::endl;
-	Include << " * Returns the name of the requested extension element" << std::endl;
-	Include << " *" << std::endl;
-	Include << " * @param Entity #CaaEntity object" << std::endl;
-	Include << " * @param Item Item to return" << std::endl;
-	Include << " * @param str Returned string" << std::endl;
-	Include << " * @param len Number of characters available in return string" << std::endl;
-	Include << " *" << std::endl;
-	Include << " * @return The number of characters in the string to copy (not including terminating NULL)" << std::endl;
-	Include << " */" << std::endl;
-	Include << "  int caa_entity_ext_element_name(CaaEntity Entity, int Item, char *str, int len);" << std::endl;
-	Include << std::endl;
-
-	Include << "/**" << std::endl;
-	Include << " * Returns the value of the requested extension element" << std::endl;
-	Include << " *" << std::endl;
-	Include << " * @param Entity #CaaEntity object" << std::endl;
-	Include << " * @param Item Item to return" << std::endl;
-	Include << " * @param str Returned string" << std::endl;
-	Include << " * @param len Number of characters available in return string" << std::endl;
-	Include << " *" << std::endl;
-	Include << " * @return The number of characters in the string to copy (not including terminating NULL)" << std::endl;
-	Include << " */" << std::endl;
-	Include << "  int caa_entity_ext_element_value(CaaEntity Entity, int Item, char *str, int len);" << std::endl;
-	Include << std::endl;
-
-	Source << "  CAA_C_EXT_GETTER(Attribute,attribute)" << std::endl;
-	Source << "  CAA_C_EXT_GETTER(Element,element)" << std::endl;
-	Source << std::endl;
 }
 
 void ProcessClass(const XMLNode& Node, std::ofstream& Source, std::ofstream& Include)
