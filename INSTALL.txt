@@ -13,6 +13,9 @@ Before you start, make sure you have installed following libraries:
  * Neon -- HTTP client library
    http://www.webdav.org/neon/
 
+ * Jansson -- C library for working with JSON data
+ 	 http://www.digip.org/jansson/
+
 Building
 ========
 
