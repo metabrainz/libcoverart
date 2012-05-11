@@ -42,6 +42,74 @@
  *
  * Please report any issues with this library at
  * <a target="_blank" href="http://tickets.musicbrainz.org/">http://tickets.musicbrainz.org/</a>.
+ *
+ * A brief example showing how to retrieve the 'front' artwork for a release
+@code
+CoverArtArchive::CCoverArt CoverArt("example-1.0");
+
+try
+{
+	std::vector<unsigned char> ImageData=CoverArt.FetchFront(ReleaseID);
+	if (ImageData.size())
+	{
+		std::stringstream FileName;
+		FileName << ReleaseID << "-front.jpg";
+		std::cout << "Saving front to '" << FileName.str() << "'" << std::endl;
+
+		std::ofstream Front(FileName.str().c_str());
+		Front.write((const char *)&ImageData[0],ImageData.size());
+		Front.close();
+	}
+}
+
+catch (CoverArtArchive::CConnectionError& Error)
+{
+	std::cout << "Connection Exception: '" << Error.what() << "'" << std::endl;
+	std::cout << "LastResult: " << CoverArt.LastResult() << std::endl;
+	std::cout << "LastHTTPCode: " << CoverArt.LastHTTPCode() << std::endl;
+	std::cout << "LastErrorMessage: " << CoverArt.LastErrorMessage() << std::endl;
+}
+
+catch (CoverArtArchive::CTimeoutError& Error)
+{
+	std::cout << "Timeout Exception: '" << Error.what() << "'" << std::endl;
+	std::cout << "LastResult: " << CoverArt.LastResult() << std::endl;
+	std::cout << "LastHTTPCode: " << CoverArt.LastHTTPCode() << std::endl;
+	std::cout << "LastErrorMessage: " << CoverArt.LastErrorMessage() << std::endl;
+}
+
+catch (CoverArtArchive::CAuthenticationError& Error)
+{
+	std::cout << "Authentication Exception: '" << Error.what() << "'" << std::endl;
+	std::cout << "LastResult: " << CoverArt.LastResult() << std::endl;
+	std::cout << "LastHTTPCode: " << CoverArt.LastHTTPCode() << std::endl;
+	std::cout << "LastErrorMessage: " << CoverArt.LastErrorMessage() << std::endl;
+}
+
+catch (CoverArtArchive::CFetchError& Error)
+{
+	std::cout << "Fetch Exception: '" << Error.what() << "'" << std::endl;
+	std::cout << "LastResult: " << CoverArt.LastResult() << std::endl;
+	std::cout << "LastHTTPCode: " << CoverArt.LastHTTPCode() << std::endl;
+	std::cout << "LastErrorMessage: " << CoverArt.LastErrorMessage() << std::endl;
+}
+
+catch (CoverArtArchive::CRequestError& Error)
+{
+	std::cout << "Request Exception: '" << Error.what() << "'" << std::endl;
+	std::cout << "LastResult: " << CoverArt.LastResult() << std::endl;
+	std::cout << "LastHTTPCode: " << CoverArt.LastHTTPCode() << std::endl;
+	std::cout << "LastErrorMessage: " << CoverArt.LastErrorMessage() << std::endl;
+}
+
+catch (CoverArtArchive::CResourceNotFoundError& Error)
+{
+	std::cout << "ResourceNotFound Exception: '" << Error.what() << "'" << std::endl;
+	std::cout << "LastResult: " << CoverArt.LastResult() << std::endl;
+	std::cout << "LastHTTPCode: " << CoverArt.LastHTTPCode() << std::endl;
+	std::cout << "LastErrorMessage: " << CoverArt.LastErrorMessage() << std::endl;
+}
+@endcode
  */
 
 namespace CoverArtArchive
