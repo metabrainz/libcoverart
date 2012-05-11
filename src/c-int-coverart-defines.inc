@@ -126,6 +126,19 @@ typedef void *CaaImageData;
 	CaaImageData caa_coverart_fetch_image(CaaCoverArt CoverArt, const char *ReleaseID, const char *ImageID, tImageSize ImageSize);
 
 /**
+ * Request all information about a release
+ *
+ * @see CoverArtArchive::CCoverArt::ReleaseInfo
+ *
+ * @param CoverArt #CaaCoverArt object
+ * @param ReleaseID The release ID
+ *
+ * @return Release information. This object <b>must</b> be deleted once
+ *				finished with.
+ */
+	CaaReleaseInfo caa_coverart_releaseinfo(CaaCoverArt CoverArt, const char *ReleaseID);
+
+/**
  * @see CoverArtArchive::CCoverArt::tCoverArtResult
  */
 

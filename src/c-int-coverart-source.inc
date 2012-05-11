@@ -89,27 +89,15 @@ CaaImageData caa_coverart_fetch_image(CaaCoverArt CoverArt, const char *ReleaseI
 	return 0;
 }
 
-/*
-Mb4Metadata caa_coverart_query(CaaCoverArt CoverArt, const char *Entity, const char *ID, const char *Resource, int NumParams, char **ParamName, char **ParamValue)
+CaaReleaseInfo caa_coverart_releaseinfo(CaaCoverArt CoverArt, const char *ReleaseID)
 {
-	if (Query)
+	if (CoverArt)
 	{
 		try
 		{
-			MusicBrainz4::CQuery::tParamMap Params;
-
-			for (int count=0;count<NumParams;count++)
-			{
-				if (ParamName[count] && ParamValue[count])
-					Params[ParamName[count]]=ParamValue[count];
-			}
-
-			CoverArtArchive::CCoverArt *TheQuery=reinterpret_cast<CoverArtArchive::CCoverArt *>(Query);
-			if (TheQuery)
-				return new MusicBrainz4::CMetadata(TheQuery->Query(Entity?Entity:"",
-																											ID?ID:"",
-																											Resource?Resource:"",
-																											Params));
+			CoverArtArchive::CCoverArt *TheCoverArt=reinterpret_cast<CoverArtArchive::CCoverArt *>(CoverArt);
+			if (TheCoverArt)
+				return new CoverArtArchive::CReleaseInfo(TheCoverArt->ReleaseInfo(ReleaseID));
 		}
 
 		catch(...)
@@ -119,7 +107,6 @@ Mb4Metadata caa_coverart_query(CaaCoverArt CoverArt, const char *Entity, const c
 
 	return 0;
 }
-*/
 
 tCoverArtResult caa_coverart_get_lastresult(CaaCoverArt o)
 {
