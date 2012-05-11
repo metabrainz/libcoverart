@@ -30,6 +30,20 @@
 
 #include "coverart/ReleaseInfo.h"
 
+/**
+ * @mainpage libcoverart
+ *
+ * This is the documentation for libcoverart, a library for retrieving coverart
+ * from the <a target="_blank" href="http://coverartarchive.org">Covert Art Archive</a>.
+ *
+ * The main entry point to the library is the CoverArtArchive::CCoverArt object.
+ *
+ * For details of the C interface, see the documentation for the file caa_c.h.
+ *
+ * Please report any issues with this library at
+ * <a target="_blank" href="http://tickets.musicbrainz.org/">http://tickets.musicbrainz.org/</a>.
+ */
+
 namespace CoverArtArchive
 {
 	class CCoverArtPrivate;
