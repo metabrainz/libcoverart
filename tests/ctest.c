@@ -32,9 +32,21 @@ int main(int argc, const char *argv[])
 {
 	int Tmp=argc;
 	const char **Tmp2=argv;
+	CaaCoverArt CoverArt=0;
 
 	Tmp=Tmp;
 	Tmp2=Tmp2;
+
+	CoverArt=caa_coverart_new("test-1.0");
+	if (CoverArt)
+	{
+		char Version[256];
+
+		caa_coverart_get_version(CoverArt,Version,sizeof(Version));
+		printf("Version: '%s'\n",Version);
+
+		caa_coverart_delete(CoverArt);
+	}
 
 	return 0;
 }
@@ -68,6 +80,7 @@ void CompileTest()
 	DummyResult=caa_coverart_get_lastresult(CoverArt);
 	DummyInt=caa_coverart_get_lasthttpcode(CoverArt);
 	caa_coverart_get_lasterrormessage(CoverArt,Str,Size);
+	caa_coverart_get_version(CoverArt,Str,Size);
 	CoverArt=caa_coverart_clone(CoverArt);
 	caa_coverart_delete(CoverArt);
 
