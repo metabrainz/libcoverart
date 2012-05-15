@@ -1,0 +1,4 @@
+/home/adhawkins/usr/lib/pkgconfig/libcoverart.pc
+/home/adhawkins/usr/lib/libcoverart.so.1.0.0
+/home/adhawkins/usr/lib/libcoverart.so.1
+/home/adhawkins/usr/lib/libcoverart.so

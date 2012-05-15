@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/adhawkins/libcoverart.git/tests/ctest.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+coverart/caa_c.h
+/home/adhawkins/libcoverart.git/tests/coverart/caa_c.h
+
+tests/../include/coverart/caa_c.h
+coverart/defines.h
+tests/../include/coverart/coverart/defines.h
+
+tests/../include/coverart/defines.h
+

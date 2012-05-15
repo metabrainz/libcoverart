@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/adhawkins/libcoverart.git/tests/test.cc
+iostream
+-
+coverart/HTTPFetch.h
+/home/adhawkins/libcoverart.git/tests/coverart/HTTPFetch.h
+coverart/CoverArt.h
+/home/adhawkins/libcoverart.git/tests/coverart/CoverArt.h
+
+tests/../include/coverart/CoverArt.h
+string
+-
+vector
+-
+coverart/ReleaseInfo.h
+tests/../include/coverart/coverart/ReleaseInfo.h
+
+tests/../include/coverart/HTTPFetch.h
+string
+-
+vector
+-
+
+tests/../include/coverart/ReleaseInfo.h
+iostream
+-
+

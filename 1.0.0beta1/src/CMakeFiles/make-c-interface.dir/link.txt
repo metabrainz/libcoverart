@@ -1,0 +1,1 @@
+/usr/bin/c++    -Wall -Werror -Wextra -pedantic-errors -O3 -DNDEBUG   CMakeFiles/make-c-interface.dir/make-c-interface.cc.o CMakeFiles/make-c-interface.dir/xmlParser.cpp.o  -o make-c-interface -rdynamic 

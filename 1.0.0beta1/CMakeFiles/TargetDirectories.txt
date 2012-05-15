@@ -1,0 +1,9 @@
+/home/adhawkins/libcoverart.git/src/CMakeFiles/coverart.dir
+/home/adhawkins/libcoverart.git/tests/CMakeFiles/ctest.dir
+/home/adhawkins/libcoverart.git/CMakeFiles/dist.dir
+/home/adhawkins/libcoverart.git/CMakeFiles/docs.dir
+/home/adhawkins/libcoverart.git/examples/CMakeFiles/example.dir
+/home/adhawkins/libcoverart.git/examples/CMakeFiles/example_c.dir
+/home/adhawkins/libcoverart.git/src/CMakeFiles/make-c-interface.dir
+/home/adhawkins/libcoverart.git/src/CMakeFiles/src_gen.dir
+/home/adhawkins/libcoverart.git/tests/CMakeFiles/test.dir

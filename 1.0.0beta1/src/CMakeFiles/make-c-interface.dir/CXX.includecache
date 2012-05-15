@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/adhawkins/libcoverart.git/src/make-c-interface.cc
+config.h
+/home/adhawkins/libcoverart.git/src/config.h
+coverart/defines.h
+/home/adhawkins/libcoverart.git/src/coverart/defines.h
+iostream
+-
+fstream
+-
+sstream
+-
+vector
+-
+string
+-
+xmlParser.h
+/home/adhawkins/libcoverart.git/src/xmlParser.h
+
+/home/adhawkins/libcoverart.git/src/xmlParser.h
+stdlib.h
+-
+tchar.h
+-
+wchar.h
+-
+
+src/../config.h
+
+src/../include/coverart/defines.h
+
