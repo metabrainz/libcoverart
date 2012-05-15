@@ -1,1 +1,0 @@
-/usr/bin/gcc   -Wall -Werror -Wextra -pedantic-errors -O3 -DNDEBUG   CMakeFiles/example_c.dir/example_c.c.o  -o example_c -rdynamic ../src/libcoverart.so.0.0.0 -lneon /home/adhawkins/usr/lib/libjansson.so -Wl,-rpath,/home/adhawkins/libcoverart.git/src:/home/adhawkins/usr/lib 

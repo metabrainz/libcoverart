@@ -1,1 +1,0 @@
-/usr/bin/c++    -Wall -Werror -Wextra -pedantic-errors -O3 -DNDEBUG   CMakeFiles/test.dir/test.cc.o  -o test -rdynamic ../src/libcoverart.so.0.0.0 -lneon /home/adhawkins/usr/lib/libjansson.so -Wl,-rpath,/home/adhawkins/libcoverart.git/src:/home/adhawkins/usr/lib 

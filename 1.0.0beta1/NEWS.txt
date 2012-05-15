@@ -1,5 +1,0 @@
-Version 1.0.0beta1
---------------------
-
-   - Initial test version
-
