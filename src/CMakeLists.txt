@@ -1,5 +1,11 @@
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_SOURCE_DIR}/../include ${NEON_INCLUDE_DIR} ${JANSSON_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(
+	${CMAKE_CURRENT_SOURCE_DIR}/..
+	${CMAKE_CURRENT_SOURCE_DIR}/../include
+	${CMAKE_CURRENT_BINARY_DIR}/../include
+	${NEON_INCLUDE_DIR}
+	${JANSSON_INCLUDE_DIR}
+)
 
 SET(_sources HTTPFetch.cc CoverArt.cc ReleaseInfo.cc ImageList.cc Image.cc
 	Thumbnails.cc TypeList.cc caa_c.cc Type.cc)
@@ -9,7 +15,7 @@ ADD_EXECUTABLE(make-c-interface make-c-interface.cc xmlParser.cpp)
 ADD_CUSTOM_COMMAND(
 	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/caa_c.cc ${CMAKE_CURRENT_BINARY_DIR}/caa_c.h ${CMAKE_CURRENT_BINARY_DIR}/../include/coverart/caa_c.h
 	COMMAND make-c-interface ${CMAKE_CURRENT_SOURCE_DIR} cinterface.xml ${CMAKE_CURRENT_BINARY_DIR} caa_c.cc caa_c.h
-	COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_BINARY_DIR}/caa_c.h ${CMAKE_CURRENT_BINARY_DIR}/../include/coverart
+	COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_BINARY_DIR}/caa_c.h ${CMAKE_CURRENT_BINARY_DIR}/../include/coverart/caa_c.h
 	DEPENDS make-c-interface cinterface.xml *.inc
 )
 
