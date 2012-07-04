@@ -130,4 +130,6 @@ void CompileTest()
 	DummyInt=DummyInt;
 	DummyDouble=DummyDouble;
 	DummyBool=DummyBool;
+	DummyData=DummyData;
+	DummyResult=DummyResult;
 }
