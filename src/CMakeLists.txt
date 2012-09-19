@@ -10,7 +10,22 @@ INCLUDE_DIRECTORIES(
 SET(_sources HTTPFetch.cc CoverArt.cc ReleaseInfo.cc ImageList.cc Image.cc
 	Thumbnails.cc TypeList.cc caa_c.cc Type.cc)
 
-ADD_EXECUTABLE(make-c-interface make-c-interface.cc xmlParser.cpp)
+# when crosscompiling import the executable targets from a file
+IF(CMAKE_CROSSCOMPILING)
+  SET(IMPORT_EXECUTABLES "IMPORTFILE-NOTFOUND" CACHE FILEPATH "Point it to the export file from a native build")
+  INCLUDE(${IMPORT_EXECUTABLES})
+ENDIF(CMAKE_CROSSCOMPILING)
+
+# only build the generator if not crosscompiling
+IF(NOT CMAKE_CROSSCOMPILING)
+	ADD_EXECUTABLE(make-c-interface make-c-interface.cc xmlParser.cpp)
+ENDIF(NOT CMAKE_CROSSCOMPILING)
+
+# export the generator target to a file, so it can be imported (see above) by another build
+# the IF() is not necessary, but makes the intention clearer
+IF(NOT CMAKE_CROSSCOMPILING)
+  EXPORT(TARGETS make-c-interface FILE ${CMAKE_BINARY_DIR}/ImportExecutables.cmake )
+ENDIF(NOT CMAKE_CROSSCOMPILING)
 
 ADD_CUSTOM_COMMAND(
 	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/caa_c.cc ${CMAKE_CURRENT_BINARY_DIR}/caa_c.h ${CMAKE_CURRENT_BINARY_DIR}/../include/coverart/caa_c.h
