@@ -36,7 +36,7 @@ MusicBrainz development mailing list:
 
 Please submit bug reports to the MusicBrainz bug tracking system:
 
-    http://tickets.musicbrainz.org/browse/LCAA
+    http://tickets.musicbrainz.org/browse/LCA
 
 You can find out more about the MusicBrainz project by visiting its
 site:
