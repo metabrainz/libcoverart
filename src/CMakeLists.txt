@@ -5,6 +5,7 @@ INCLUDE_DIRECTORIES(
 	${CMAKE_CURRENT_BINARY_DIR}/../include
 	${NEON_INCLUDE_DIR}
 	${JANSSON_INCLUDE_DIR}
+	${LIBXML2_INCLUDE_DIR}
 )
 
 SET(_sources HTTPFetch.cc CoverArt.cc ReleaseInfo.cc ImageList.cc Image.cc
@@ -18,7 +19,8 @@ ENDIF(CMAKE_CROSSCOMPILING)
 
 # only build the generator if not crosscompiling
 IF(NOT CMAKE_CROSSCOMPILING)
-	ADD_EXECUTABLE(make-c-interface make-c-interface.cc xmlParser.cpp)
+	ADD_EXECUTABLE(make-c-interface make-c-interface.cc xmlParser.cc)
+	TARGET_LINK_LIBRARIES(make-c-interface ${LIBXML2_LIBRARIES})
 ENDIF(NOT CMAKE_CROSSCOMPILING)
 
 # export the generator target to a file, so it can be imported (see above) by another build
