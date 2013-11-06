@@ -7,3 +7,4 @@ config.h
 libcoverart.pc
 docs
 install_manifest.txt
+ImportExecutables.cmake
