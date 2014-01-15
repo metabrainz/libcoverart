@@ -23,6 +23,7 @@
 
 ----------------------------------------------------------------------------*/
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <limits.h>
 #include <string.h>
@@ -44,9 +45,12 @@ int main(int argc, const char *argv[])
 			{
 				if (0!=caa_imagedata_size(ImageData))
 				{
-					char FileName[PATH_MAX];
+					int size;
+					char *FileName;
 					FILE *fptr;
 
+					size=snprintf(NULL,0,"%s-front.jpg",ReleaseID);
+					FileName=malloc((size+1) * sizeof(char));
 					sprintf(FileName,"%s-front.jpg",ReleaseID);
 
 					printf("Saving front to '%s'\n",FileName);
@@ -57,6 +61,8 @@ int main(int argc, const char *argv[])
 						fclose(fptr);
 						printf("Saved front to '%s'\n",FileName);
 					}
+
+					free(FileName);
 				}
 				else
 				{
@@ -71,9 +77,12 @@ int main(int argc, const char *argv[])
 			{
 				if (0!=caa_imagedata_size(ImageData))
 				{
-					char FileName[PATH_MAX];
+					int size;
+					char *FileName;
 					FILE *fptr;
 
+					size=snprintf(NULL,0,"%s-back.jpg",ReleaseID);
+					FileName=malloc((size+1) * sizeof(char));
 					sprintf(FileName,"%s-back.jpg",ReleaseID);
 
 					printf("Saving back to '%s'\n",FileName);
@@ -84,6 +93,8 @@ int main(int argc, const char *argv[])
 						fclose(fptr);
 						printf("Saved back to '%s'\n",FileName);
 					}
+
+					free(FileName);
 				}
 				else
 				{
@@ -109,14 +120,25 @@ int main(int argc, const char *argv[])
 						CaaImage Image=caa_image_list_item(ImageList,ImageNum);
 						if (Image)
 						{
-							char ID[PATH_MAX];
-							char Comment[PATH_MAX];
-							char URL[PATH_MAX];
+							char *ID;
+							char *Comment;
+							char *URL;
+							int ID_size;
+							int Comment_size;
+							int URL_size;
 							CaaThumbnails Thumbnails=caa_image_get_thumbnails(Image);
 
-							caa_image_get_id(Image,ID,sizeof(ID));
-							caa_image_get_comment(Image,Comment,sizeof(Comment));
-							caa_image_get_image(Image,URL,sizeof(URL));
+							ID_size=caa_image_get_id(Image, NULL, 0) + 1;
+							Comment_size=caa_image_get_comment(Image, NULL, 0) + 1;
+							URL_size=caa_image_get_image(Image, NULL, 0) + 1;
+
+							ID=malloc(ID_size * sizeof(char));
+							Comment=malloc(Comment_size * sizeof(char));
+							URL=malloc(URL_size * sizeof(char));
+
+							caa_image_get_id(Image,ID,ID_size);
+							caa_image_get_comment(Image,Comment,Comment_size);
+							caa_image_get_image(Image,URL,URL_size);
 
 							printf("\nApproved: %d\n",caa_image_get_approved(Image));
 							printf("Back: %d\n",caa_image_get_back(Image));
@@ -131,9 +153,12 @@ int main(int argc, const char *argv[])
 							{
 								if (0!=caa_imagedata_size(ImageData))
 								{
-									char FileName[PATH_MAX];
+									int size;
+									char *FileName;
 									FILE *fptr;
 
+									size=snprintf(NULL,0,"%s-%s-full.jpg",ReleaseID,ID);
+									FileName=malloc((size+1) * sizeof(char));
 									sprintf(FileName,"%s-%s-full.jpg",ReleaseID,ID);
 
 									printf("Saving full for '%s' to '%s'\n",ID,FileName);
@@ -144,6 +169,8 @@ int main(int argc, const char *argv[])
 										fclose(fptr);
 										printf("Saved full to '%s'\n",FileName);
 									}
+
+									free(FileName);
 								}
 
 								caa_imagedata_delete(ImageData);
@@ -158,9 +185,12 @@ int main(int argc, const char *argv[])
 									{
 										if (0!=caa_imagedata_size(ImageData))
 										{
-											char FileName[PATH_MAX];
+											int size;
+											char *FileName;
 											FILE *fptr;
 
+											size=snprintf(NULL,0,"%s-%s-500.jpg",ReleaseID,ID);
+											FileName=malloc((size+1) * sizeof(char));
 											sprintf(FileName,"%s-%s-500.jpg",ReleaseID,ID);
 
 											printf("Saving 500 for '%s' to '%s'\n",ID,FileName);
@@ -171,6 +201,8 @@ int main(int argc, const char *argv[])
 												fclose(fptr);
 												printf("Saved 500 to '%s'\n",FileName);
 											}
+
+											free(FileName);
 										}
 
 										caa_imagedata_delete(ImageData);
@@ -183,9 +215,12 @@ int main(int argc, const char *argv[])
 										{
 											if (0!=caa_imagedata_size(ImageData))
 											{
-												char FileName[PATH_MAX];
+												int size;
+												char *FileName;
 												FILE *fptr;
 
+												size=snprintf(NULL,0,"%s-%s-250.jpg",ReleaseID,ID);
+												FileName=malloc((size+1) * sizeof(char));
 												sprintf(FileName,"%s-%s-250.jpg",ReleaseID,ID);
 
 												printf("Saving 250 for '%s' to '%s'\n",ID,FileName);
@@ -196,6 +231,8 @@ int main(int argc, const char *argv[])
 													fclose(fptr);
 													printf("Saved 250 to '%s'\n",FileName);
 												}
+
+												free(FileName);
 											}
 
 											caa_imagedata_delete(ImageData);
@@ -203,6 +240,10 @@ int main(int argc, const char *argv[])
 									}
 								}
 							}
+
+							free(ID);
+							free(Comment);
+							free(URL);
 						}
 					}
 				}
