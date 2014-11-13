@@ -50,5 +50,5 @@ ADD_CUSTOM_TARGET(docs
 ADD_DEPENDENCIES(docs src_gen)
 
 ADD_CUSTOM_TARGET(dist
-    COMMAND git archive --prefix="libcoverart-${PROJECT_VERSION}/" release-${PROJECT_VERSION} | gzip -9 > libcoverart-${PROJECT_VERSION}.tar.gz
+    COMMAND git archive --prefix="libcoverart-${PROJECT_VERSION}/" master | gzip -9 > libcoverart-${PROJECT_VERSION}.tar.gz
 )
