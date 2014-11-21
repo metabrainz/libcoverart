@@ -5,6 +5,7 @@ Makefile
 cmake_install.cmake
 config.h
 libcoverart.pc
+libcoverartc.pc
 docs
 install_manifest.txt
 ImportExecutables.cmake

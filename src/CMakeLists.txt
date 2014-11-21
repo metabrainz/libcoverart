@@ -9,8 +9,10 @@ INCLUDE_DIRECTORIES(
 	${LIBXML2_INCLUDE_DIR}
 )
 
-SET(_sources HTTPFetch.cc CoverArt.cc ReleaseInfo.cc ImageList.cc Image.cc
-	Thumbnails.cc TypeList.cc caa_c.cc Type.cc)
+SET(_sourcescc HTTPFetch.cc CoverArt.cc ReleaseInfo.cc ImageList.cc Image.cc
+	Thumbnails.cc TypeList.cc Type.cc)
+
+SET(_sourcesc caa_c.cc)
 
 # when crosscompiling import the executable targets from a file
 IF(CMAKE_CROSSCOMPILING)
@@ -39,11 +41,18 @@ ADD_CUSTOM_COMMAND(
 
 ADD_CUSTOM_TARGET(src_gen DEPENDS caa_c.h)
 
-ADD_LIBRARY(coverart SHARED ${_sources})
+ADD_LIBRARY(coverart SHARED ${_sourcescc})
+ADD_LIBRARY(coverartc SHARED ${_sourcesc})
 
 SET_TARGET_PROPERTIES(coverart PROPERTIES
     VERSION ${coverart_VERSION}
     SOVERSION ${coverart_SOVERSION}
+    DEFINE_SYMBOL MB_API_EXPORTS
+)
+
+SET_TARGET_PROPERTIES(coverartc PROPERTIES
+    VERSION ${coverartc_VERSION}
+    SOVERSION ${coverartc_SOVERSION}
     DEFINE_SYMBOL MB_API_EXPORTS
 )
 
@@ -57,6 +66,7 @@ if(CMAKE_BUILD_TYPE STREQUAL Debug)
 endif(CMAKE_BUILD_TYPE STREQUAL Debug)
 
 TARGET_LINK_LIBRARIES(coverart ${NEON_LIBRARIES} ${JANSSON_LIBRARIES})
+TARGET_LINK_LIBRARIES(coverartc coverart)
 
 IF(WIN32)
     TARGET_LINK_LIBRARIES(coverart wsock32 winmm ws2_32)
@@ -64,7 +74,7 @@ ENDIF(WIN32)
 
 IF(CMAKE_COMPILER_IS_GNUCXX)
 		SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -Wextra -pedantic-errors")
-		set_source_files_properties(mb4_c.cc PROPERTIES COMPILE_FLAGS "-Wno-deprecated-declarations")
+		set_source_files_properties(ca_c.cc PROPERTIES COMPILE_FLAGS "-Wno-deprecated-declarations")
 		set_source_files_properties(ReleaseInfo.cc PROPERTIES COMPILE_FLAGS "-Wno-long-long")
 		set_source_files_properties(ImageList.cc PROPERTIES COMPILE_FLAGS "-Wno-long-long")
 		set_source_files_properties(Image.cc PROPERTIES COMPILE_FLAGS "-Wno-long-long")
@@ -75,3 +85,4 @@ IF(CMAKE_COMPILER_IS_GNUCXX)
 ENDIF(CMAKE_COMPILER_IS_GNUCXX)
 
 INSTALL(TARGETS coverart DESTINATION ${LIB_INSTALL_DIR})
+INSTALL(TARGETS coverartc DESTINATION ${LIB_INSTALL_DIR})
