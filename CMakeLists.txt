@@ -7,8 +7,8 @@ SET(PROJECT_VERSION 1.0.0)
 # 2. If any interfaces have been added, removed, or changed since the last update, increment current, and set revision to 0.
 # 3. If any interfaces have been added since the last public release, then increment age.
 # 4. If any interfaces have been removed since the last public release, then set age to 0.
-SET(coverart_SOVERSION_CURRENT  0)
-SET(coverart_SOVERSION_REVISION 1)
+SET(coverart_SOVERSION_CURRENT  1)
+SET(coverart_SOVERSION_REVISION 0)
 SET(coverart_SOVERSION_AGE      0)
 
 MATH(EXPR coverart_SOVERSION_MAJOR "${coverart_SOVERSION_CURRENT} - ${coverart_SOVERSION_AGE}")
@@ -18,8 +18,8 @@ MATH(EXPR coverart_SOVERSION_PATCH "${coverart_SOVERSION_REVISION}")
 SET(coverart_VERSION ${coverart_SOVERSION_MAJOR}.${coverart_SOVERSION_MINOR}.${coverart_SOVERSION_PATCH})
 SET(coverart_SOVERSION ${coverart_SOVERSION_MAJOR})
 
-SET(coverartc_SOVERSION_CURRENT  2)
-SET(coverartc_SOVERSION_REVISION 1)
+SET(coverartc_SOVERSION_CURRENT  1)
+SET(coverartc_SOVERSION_REVISION 0)
 SET(coverartc_SOVERSION_AGE      0)
 
 MATH(EXPR coverartc_SOVERSION_MAJOR "${coverartc_SOVERSION_CURRENT} - ${coverartc_SOVERSION_AGE}")
@@ -42,14 +42,14 @@ SET(BIN_INSTALL_DIR ${EXEC_INSTALL_PREFIX}/bin CACHE PATH "Installation prefix f
 SET(LIB_INSTALL_DIR ${EXEC_INSTALL_PREFIX}/lib${LIB_SUFFIX} CACHE PATH  "Installation prefix for object code libraries" FORCE)
 SET(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/include CACHE PATH "Installation prefix for C header files" FORCE)
 
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/libcoverartcc.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/libcoverartcc.pc)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/libcoverart.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/libcoverart.pc)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/libcoverartc.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/libcoverartc.pc)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.cmake ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
 FILE(GLOB headers ${CMAKE_CURRENT_SOURCE_DIR}/include/coverart/*.h)
 INSTALL(FILES ${headers} include/coverart/caa_c.h DESTINATION ${INCLUDE_INSTALL_DIR}/coverart)
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/libcoverart.pc ${CMAKE_CURRENT_BINARY_DIR}/libcoverartc.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/libcoverartcc.pc ${CMAKE_CURRENT_BINARY_DIR}/libcoverart.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
 
 ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(tests)

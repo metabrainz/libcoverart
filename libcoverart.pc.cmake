@@ -4,10 +4,10 @@ libdir=${LIB_INSTALL_DIR}
 includedir=${INCLUDE_INSTALL_DIR}
 
 Name: ${PROJECT_NAME}
-Description: The Cover Art Archive Client Library.
+Description: The Cover Art Archive Client Library C interface.
 URL: http://musicbrainz.org/doc/libcoverart
 Version: ${PROJECT_VERSION}
-Requires.private: neon >= 0.25, jansson
+Requires.private: ${PROJECT_NAME}cc
 Libs: -L${LIB_INSTALL_DIR} -lcoverart
 Cflags: -I${INCLUDE_INSTALL_DIR}
 
