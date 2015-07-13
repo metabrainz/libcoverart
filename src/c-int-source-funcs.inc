@@ -28,7 +28,6 @@
 #include "coverart/caa_c.h"
 
 #include <string.h>
-#include <map>
 #include <vector>
 
 #include "coverart/CoverArt.h"
@@ -39,50 +38,6 @@
 #include "coverart/Thumbnails.h"
 #include "coverart/Type.h"
 #include "coverart/TypeList.h"
-
-std::string GetMapName(std::map<std::string,std::string> Map, int Item)
-{
-	std::string Ret;
-
-	if (Item<(int)Map.size())
-	{
-		std::map<std::string,std::string>::const_iterator ThisItem=Map.begin();
-
-		int count=0;
-
-		while (count<Item)
-		{
-			++count;
-			++ThisItem;
-		}
-
-		Ret=(*ThisItem).first;
-	}
-
-	return Ret;
-}
-
-std::string GetMapValue(std::map<std::string,std::string> Map, int Item)
-{
-	std::string Ret;
-
-	if (Item<(int)Map.size())
-	{
-		std::map<std::string,std::string>::const_iterator ThisItem=Map.begin();
-
-		int count=0;
-
-		while (count<Item)
-		{
-			++count;
-			++ThisItem;
-		}
-
-		Ret=(*ThisItem).second;
-	}
-
-	return Ret;
-}
 
 #define CAA_C_DELETE(TYPE1, TYPE2) \
 	void \
@@ -246,54 +201,5 @@ std::string GetMapValue(std::map<std::string,std::string> Map, int Item)
 			} \
 		} \
 		return (Caa##TYPE1)0; \
-	} \
-
-#define CAA_C_EXT_GETTER(PROP1, PROP2) \
-	int \
-	caa_entity_ext_##PROP2##s_size(CaaEntity o) \
-	{ \
-		if (o) \
-		{ \
-			return ((CoverArtArchive::CEntity *)o)->Ext##PROP1##s().size(); \
-		} \
-		return 0; \
-	} \
-	int \
-	caa_entity_ext_##PROP2##_name(CaaEntity o, int Item, char *str, int len) \
-	{ \
-		int ret=0; \
-		if (str) \
-			*str=0; \
-		if (o) \
-		{ \
-			std::map<std::string,std::string> Items=((CoverArtArchive::CEntity *)o)->Ext##PROP1##s(); \
-			std::string Name=GetMapName(Items,Item); \
-			ret=Name.length(); \
-			if (str && len) \
-			{ \
-				strncpy(str, Name.c_str(), len); \
-				str[len-1]='\0'; \
-			} \
-		} \
-		return ret; \
-	} \
-	int \
-	caa_entity_ext_##PROP2##_value(CaaEntity o, int Item, char *str, int len) \
-	{ \
-		int ret=0; \
-		if (str) \
-			*str=0; \
-		if (o) \
-		{ \
-			std::map<std::string,std::string> Items=((CoverArtArchive::CEntity *)o)->Ext##PROP1##s(); \
-			std::string Name=GetMapValue(Items,Item); \
-			ret=Name.length(); \
-			if (str && len) \
-			{ \
-				strncpy(str, Name.c_str(), len); \
-				str[len-1]='\0'; \
-			} \
-		} \
-		return ret; \
 	} \
 
