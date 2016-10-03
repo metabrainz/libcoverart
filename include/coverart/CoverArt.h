@@ -59,7 +59,7 @@
  * @par
  *     <tt>gcc -o test_app test_app.c -lcoverart -lm -lstdc++</tt>
  *
- * @par Compiling and Linking
+ * @par Example
  *
  * @par
  *
