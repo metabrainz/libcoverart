@@ -53,7 +53,7 @@
  * @par
  *     <tt>g++ -o test_app test_app.cpp `pkg-config libcoverart --cflags --libs`</tt>
  *
- * If you don't want/can't use pkg-config and you are using the C API, make sure
+ * If you don't want to/can't use pkg-config and you are using the C API, make sure
  * you link in the C++ standard library:
  *
  * @par
