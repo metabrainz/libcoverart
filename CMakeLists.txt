@@ -3,6 +3,14 @@ cmake_minimum_required(VERSION 2.6)
 PROJECT(libcoverart)
 SET(PROJECT_VERSION 1.0.0)
 
+INCLUDE(CheckCXXSourceCompiles)
+CHECK_CXX_SOURCE_COMPILES("#include <string>\n#if !defined(_GLIBCXX_USE_CXX11_ABI) || _GLIBCXX_USE_CXX11_ABI != 1\n#error not using CXX11 ABI\n#endif\nint main() {}" USING_CXX11_ABI)
+IF(USING_CXX11_ABI)
+SET(covertart_SOVERSION_v5 "v5")
+ELSE()
+SET(covertart_SOVERSION_v5 "")
+ENDIF()
+
 # 1. If the library source code has changed at all since the last update, then increment revision.
 # 2. If any interfaces have been added, removed, or changed since the last update, increment current, and set revision to 0.
 # 3. If any interfaces have been added since the last public release, then increment age.
@@ -15,7 +23,7 @@ MATH(EXPR coverart_SOVERSION_MAJOR "${coverart_SOVERSION_CURRENT} - ${coverart_S
 MATH(EXPR coverart_SOVERSION_MINOR "${coverart_SOVERSION_AGE}")
 MATH(EXPR coverart_SOVERSION_PATCH "${coverart_SOVERSION_REVISION}")
 
-SET(coverart_VERSION ${coverart_SOVERSION_MAJOR}.${coverart_SOVERSION_MINOR}.${coverart_SOVERSION_PATCH})
+SET(coverart_VERSION ${coverart_SOVERSION_MAJOR}${covertart_SOVERSION_v5}.${coverart_SOVERSION_MINOR}.${coverart_SOVERSION_PATCH})
 SET(coverart_SOVERSION ${coverart_SOVERSION_MAJOR})
 
 SET(coverartc_SOVERSION_CURRENT  1)
