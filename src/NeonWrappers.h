@@ -50,6 +50,7 @@ class CNESessionWrapper
 		CNESessionWrapper(const std::string& Scheme, const std::string& Host, int Port)
 		:	m_Session(ne_session_create(Scheme.c_str(), Host.c_str(), Port))
 		{
+			ne_ssl_trust_default_ca(m_Session);
 		}
 
 		~CNESessionWrapper()
