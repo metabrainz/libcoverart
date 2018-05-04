@@ -60,7 +60,7 @@ int main(int argc, const char *argv[])
 			}
 		}
 
-		catch (CoverArtArchive::CExceptionBase e)
+		catch (const CoverArtArchive::CExceptionBase& e)
 		{
 			std::cout << "Exception: '" << e.what() << "'" << std::endl;
 		}
@@ -81,7 +81,7 @@ int main(int argc, const char *argv[])
 			}
 		}
 
-		catch (CoverArtArchive::CExceptionBase e)
+		catch (const CoverArtArchive::CExceptionBase& e)
 		{
 			std::cout << "Exception: '" << e.what() << "'" << std::endl;
 		}
@@ -134,7 +134,7 @@ int main(int argc, const char *argv[])
 						Full.close();
 					}
 
-					catch (CoverArtArchive::CExceptionBase e)
+					catch (const CoverArtArchive::CExceptionBase& e)
 					{
 						std::cout << "Exception: '" << e.what() << "'" << std::endl;
 					}
@@ -158,7 +158,7 @@ int main(int argc, const char *argv[])
 								Large.close();
 							}
 
-							catch (CoverArtArchive::CExceptionBase e)
+							catch (const CoverArtArchive::CExceptionBase& e)
 							{
 								std::cout << "Exception: '" << e.what() << "'" << std::endl;
 							}
@@ -180,7 +180,7 @@ int main(int argc, const char *argv[])
 								Small.close();
 							}
 
-							catch (CoverArtArchive::CExceptionBase e)
+							catch (const CoverArtArchive::CExceptionBase& e)
 							{
 								std::cout << "Exception: '" << e.what() << "'" << std::endl;
 							}

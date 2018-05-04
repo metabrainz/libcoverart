@@ -153,7 +153,7 @@ int CoverArtArchive::CHTTPFetch::Fetch(const std::string& URL, bool FollowRedire
 			Finished=true;
 		}
 
-		catch(CRedirect r)
+		catch(const CRedirect& r)
 		{
 			if (FollowRedirects)
 			{
