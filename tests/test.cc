@@ -27,7 +27,7 @@ int main(int /*argc*/, const char */*argv*/[])
 		std::cout << "Image has size " << Image.size() << std::endl;
 	}
 
-	catch (CoverArtArchive::CExceptionBase e)
+	catch (const CoverArtArchive::CExceptionBase& e)
 	{
 		std::cout << "Exception: " << e.what() << std::endl;
 	}
