@@ -32,11 +32,12 @@ IF(NOT CMAKE_CROSSCOMPILING)
   EXPORT(TARGETS make-c-interface FILE ${CMAKE_BINARY_DIR}/ImportExecutables.cmake )
 ENDIF(NOT CMAKE_CROSSCOMPILING)
 
+FILE(GLOB INC_FILES *.inc)
 ADD_CUSTOM_COMMAND(
 	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/caa_c.cc ${CMAKE_CURRENT_BINARY_DIR}/caa_c.h ${CMAKE_CURRENT_BINARY_DIR}/../include/coverart/caa_c.h
 	COMMAND make-c-interface ${CMAKE_CURRENT_SOURCE_DIR} cinterface.xml ${CMAKE_CURRENT_BINARY_DIR} caa_c.cc caa_c.h
 	COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_BINARY_DIR}/caa_c.h ${CMAKE_CURRENT_BINARY_DIR}/../include/coverart/caa_c.h
-	DEPENDS make-c-interface cinterface.xml *.inc
+	DEPENDS make-c-interface cinterface.xml ${INC_FILES}
 )
 
 ADD_CUSTOM_TARGET(src_gen DEPENDS caa_c.h)
