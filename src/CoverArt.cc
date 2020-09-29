@@ -93,7 +93,7 @@ void CoverArtArchive::CCoverArt::SetProxyPassword(const std::string& ProxyPasswo
 std::vector<unsigned char> CoverArtArchive::CCoverArt::FetchFront(const std::string& ReleaseID) const
 {
 	std::stringstream URL;
-	URL << "http://coverartarchive.org/release/" << ReleaseID << "/front";
+	URL << "https://coverartarchive.org/release/" << ReleaseID << "/front";
 
 	return MakeRequest(URL.str());
 }
@@ -101,7 +101,7 @@ std::vector<unsigned char> CoverArtArchive::CCoverArt::FetchFront(const std::str
 std::vector<unsigned char> CoverArtArchive::CCoverArt::FetchBack(const std::string& ReleaseID) const
 {
 	std::stringstream URL;
-	URL << "http://coverartarchive.org/release/" << ReleaseID << "/back";
+	URL << "https://coverartarchive.org/release/" << ReleaseID << "/back";
 
 	return MakeRequest(URL.str());
 }
@@ -109,7 +109,7 @@ std::vector<unsigned char> CoverArtArchive::CCoverArt::FetchBack(const std::stri
 std::vector<unsigned char> CoverArtArchive::CCoverArt::FetchImage(const std::string& ReleaseID, const std::string& ID, tImageSize Size) const
 {
 	std::stringstream URL;
-	URL << "http://coverartarchive.org/release/" << ReleaseID << "/" << ID;
+	URL << "https://coverartarchive.org/release/" << ReleaseID << "/" << ID;
 
 	switch (Size)
 	{
@@ -206,7 +206,7 @@ CoverArtArchive::CReleaseInfo CoverArtArchive::CCoverArt::ReleaseInfo(const std:
 	CReleaseInfo ReleaseInfo;
 
 	std::stringstream URL;
-	URL << "http://coverartarchive.org/release/" << ReleaseID;
+	URL << "https://coverartarchive.org/release/" << ReleaseID;
 
 	std::vector<unsigned char> JSON=MakeRequest(URL.str());
 	std::string strJSON(JSON.begin(),JSON.end());
