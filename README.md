@@ -1,16 +1,13 @@
-================================
- CoverArtArchive Client Library
-================================
+# CoverArtArchive Client Library
+
 
 Documentation
 -------------
 
 To get started quickly have a look at the examples directory which
 contains various sample programs. API documentation can be generated
-using [Doxygen] (http://www.stack.nl/~dimitri/doxygen/). The online version of
-the API documentation can be found at:
-
-    http://metabrainz.github.com/libcoverart/
+using [Doxygen](https://github.com/doxygen/doxygen). The online version of
+the API documentation can be found [here](https://metabrainz.github.io/libcoverart/1.0.0/).
 
 Compiling and Linking
 ---------------------
