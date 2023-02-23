@@ -178,10 +178,10 @@ namespace CoverArtArchive
 		 *
 		 * Constructor
 		 *
-     * @param UserAgent User agent to use in any queries and submissions. The format
-     *              is @c "application-version", where application is your application's name
-     *              and version is a version number which may not contain a '-' character.
-		*/
+		 * @param UserAgent User agent to use in any queries and submissions. The format
+		 *                  is @c "application-version", where application is your application's name
+		 *                  and version is a version number which may not contain a '-' character.
+		 */
 
 		CCoverArt(const std::string& UserAgent);
 		~CCoverArt();
